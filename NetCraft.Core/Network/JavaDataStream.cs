@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NetCraft.Core.Network
 {
-    internal class JavaDataStream : Stream
+    public class JavaDataStream : Stream
     {
         public Stream BaseStream { get; set; }
         public Encoding StringEncoding { get; set; }

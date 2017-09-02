@@ -44,6 +44,15 @@
   <ItemGroup>
     <Compile Include="Network\JavaDataStream.cs" />
     <Compile Include="Packets\IPacket.cs" />
+    <Compile Include="Packets\Packet0KeepAlive.cs" />
+    <Compile Include="Packets\Packet100OpenWindow.cs" />
+    <Compile Include="Packets\Packet101CloseWindow.cs" />
+    <Compile Include="Packets\Packet102WindowClick.cs" />
+    <Compile Include="Packets\Packet103SetSlot.cs" />
+    <Compile Include="Packets\Packet104WindowItems.cs" />
+    <Compile Include="Packets\Packet105UpdateProgressBar.cs" />
+    <Compile Include="Packets\Packet106Transaction.cs" />
+    <Compile Include="Packets\Packet130UpdateSign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
