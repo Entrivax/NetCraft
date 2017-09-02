@@ -56,6 +56,11 @@
     <Compile Include="Packets\Packet10Flying.cs" />
     <Compile Include="Packets\Packet11PlayerPosition.cs" />
     <Compile Include="Packets\Packet12PlayerLook.cs" />
+    <Compile Include="Packets\Packet13PlayerLookMove.cs" />
+    <Compile Include="Packets\Packet14BlockDig.cs" />
+    <Compile Include="Packets\Packet15Place.cs" />
+    <Compile Include="Packets\Packet16BlockItemSwitch.cs" />
+    <Compile Include="Packets\Packet17Sleep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
