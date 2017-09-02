@@ -21,16 +21,23 @@ namespace NetCraft.Core.Packets
             isChunkDataPacket = true;
         }
 
-        public Packet130UpdateSign(int i, int j, int k, String[] lines)
+        public Packet130UpdateSign(int x, int y, int z, String[] lines)
         {
             isChunkDataPacket = true;
-            xPosition = i;
-            yPosition = j;
-            zPosition = k;
+            xPosition = x;
+            yPosition = y;
+            zPosition = z;
             signLines = lines;
         }
 
-        public int Size => throw new NotImplementedException();
+        public int Size {
+            get
+            {
+                var length = 0;
+                signLines.ToList().ForEach(line => length += line.Length);
+                return length;
+            }
+        }
 
         public void ReadPacketData(JavaDataStream stream)
         {
