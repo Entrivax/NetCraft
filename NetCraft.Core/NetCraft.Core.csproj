@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="Network\JavaDataStream.cs" />
     <Compile Include="Packets\IPacket.cs" />
+    <Compile Include="Packets\Packet10Flying.cs" />
+    <Compile Include="Packets\Packet11PlayerPosition.cs" />
+    <Compile Include="Packets\Packet12PlayerLook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
