@@ -16,6 +16,9 @@ namespace NetCraft.Core.Packets
         /// <param name="stream"></param>
         void WritePacketData(JavaDataStream stream);
 
+        /// <summary>
+        /// Get size of the packet
+        /// </summary>
         int Size { get; }
     }
 }
