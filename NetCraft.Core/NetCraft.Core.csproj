@@ -61,6 +61,14 @@
     <Compile Include="Packets\Packet15Place.cs" />
     <Compile Include="Packets\Packet16BlockItemSwitch.cs" />
     <Compile Include="Packets\Packet17Sleep.cs" />
+    <Compile Include="Packets\Packet18Animation.cs" />
+    <Compile Include="Packets\Packet19EntityAction.cs" />
+    <Compile Include="Packets\Packet1Login.cs" />
+    <Compile Include="Packets\Packet200Statistic.cs" />
+    <Compile Include="Packets\Packet20NamedEntitySpawn.cs" />
+    <Compile Include="Packets\Packet21PickupSpawn.cs" />
+    <Compile Include="Packets\Packet22Collect.cs" />
+    <Compile Include="Packets\Packet23VehicleSpawn.cs" />
     <Compile Include="Packets\Packet255KickDisconnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
