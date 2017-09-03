@@ -61,6 +61,7 @@
     <Compile Include="Packets\Packet15Place.cs" />
     <Compile Include="Packets\Packet16BlockItemSwitch.cs" />
     <Compile Include="Packets\Packet17Sleep.cs" />
+    <Compile Include="Packets\Packet255KickDisconnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
