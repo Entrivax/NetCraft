@@ -69,7 +69,13 @@
     <Compile Include="Packets\Packet21PickupSpawn.cs" />
     <Compile Include="Packets\Packet22Collect.cs" />
     <Compile Include="Packets\Packet23VehicleSpawn.cs" />
+    <Compile Include="Packets\Packet24MobSpawn.cs" />
     <Compile Include="Packets\Packet255KickDisconnect.cs" />
+    <Compile Include="Packets\Packet25EntityPainting.cs" />
+    <Compile Include="Packets\Packet27Position.cs" />
+    <Compile Include="Packets\Packet28EntityVelocity.cs" />
+    <Compile Include="Packets\Packet29DestroyEntity.cs" />
+    <Compile Include="Packets\Packet2Handshake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
