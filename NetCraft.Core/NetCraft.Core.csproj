@@ -91,7 +91,20 @@
     <Compile Include="Packets\Packet4UpdateTime.cs" />
     <Compile Include="Packets\Packet50PreChunk.cs" />
     <Compile Include="Packets\Packet51MapChunk.cs" />
+    <Compile Include="Packets\Packet52MultiBlockChange.cs" />
+    <Compile Include="Packets\Packet53BlockChange.cs" />
+    <Compile Include="Packets\Packet54PlayNoteBlock.cs" />
+    <Compile Include="Packets\Packet5PlayerInventory.cs" />
+    <Compile Include="Packets\Packet60Explosion.cs" />
+    <Compile Include="Packets\Packet61DoorChange.cs" />
+    <Compile Include="Packets\Packet6SpawnPosition.cs" />
+    <Compile Include="Packets\Packet70Bed.cs" />
+    <Compile Include="Packets\Packet71Weather.cs" />
+    <Compile Include="Packets\Packet7UseEntity.cs" />
+    <Compile Include="Packets\Packet8UpdateHealth.cs" />
+    <Compile Include="Packets\Packet9Respawn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="World\ChunkPosition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
