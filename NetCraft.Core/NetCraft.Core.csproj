@@ -32,6 +32,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -84,7 +87,14 @@
     <Compile Include="Packets\Packet38EntityStatus.cs" />
     <Compile Include="Packets\Packet39AttachEntity.cs" />
     <Compile Include="Packets\Packet3Chat.cs" />
+    <Compile Include="Packets\Packet40EntityMetadata.cs" />
+    <Compile Include="Packets\Packet4UpdateTime.cs" />
+    <Compile Include="Packets\Packet50PreChunk.cs" />
+    <Compile Include="Packets\Packet51MapChunk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
