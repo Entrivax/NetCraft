@@ -76,6 +76,14 @@
     <Compile Include="Packets\Packet28EntityVelocity.cs" />
     <Compile Include="Packets\Packet29DestroyEntity.cs" />
     <Compile Include="Packets\Packet2Handshake.cs" />
+    <Compile Include="Packets\Packet30Entity.cs" />
+    <Compile Include="Packets\Packet31RelEntityMove.cs" />
+    <Compile Include="Packets\Packet32EntityLook.cs" />
+    <Compile Include="Packets\Packet33RelEntityMoveLook.cs" />
+    <Compile Include="Packets\Packet34EntityTeleport.cs" />
+    <Compile Include="Packets\Packet38EntityStatus.cs" />
+    <Compile Include="Packets\Packet39AttachEntity.cs" />
+    <Compile Include="Packets\Packet3Chat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
