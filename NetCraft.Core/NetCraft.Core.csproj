@@ -103,6 +103,7 @@
     <Compile Include="Packets\Packet7UseEntity.cs" />
     <Compile Include="Packets\Packet8UpdateHealth.cs" />
     <Compile Include="Packets\Packet9Respawn.cs" />
+    <Compile Include="Packets\PacketManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="World\ChunkPosition.cs" />
   </ItemGroup>

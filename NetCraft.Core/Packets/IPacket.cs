@@ -2,7 +2,7 @@
 
 namespace NetCraft.Core.Packets
 {
-    interface IPacket
+    public interface IPacket
     {
         /// <summary>
         /// This method is used to read data of the packet
