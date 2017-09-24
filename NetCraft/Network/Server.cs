@@ -24,7 +24,7 @@ namespace NetCraft.Network
         private List<Client> _clients;
         private List<Client> _clientsToRemove;
 
-        public event EventHandler OnTick;
+        public event System.EventHandler OnTick;
         public event DisconnectClientHandler OnDisconnect;
 
         public Server(PacketManager packetManager, PluginManager pluginManager)
