@@ -1,10 +1,6 @@
-﻿using NetCraft.Core.Network;
-using NetCraft.Core.Packets;
+﻿using NetCraft.Core.Packets;
 using NetCraft.Network;
 using NetCraft.Plugin;
-using Newtonsoft.Json;
-using System;
-using System.Net.Sockets;
 
 namespace NetCraft
 {
