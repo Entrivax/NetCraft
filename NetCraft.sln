@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCraft", "NetCraft\NetCra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCraft.Core", "NetCraft.Core\NetCraft.Core.csproj", "{5F1D7B81-585A-461E-9F73-E40E04CE97FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCraft.Base", "NetCraft.Base\NetCraft.Base.csproj", "{6757A884-CCCB-43D0-A657-4F2A35896C87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5F1D7B81-585A-461E-9F73-E40E04CE97FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F1D7B81-585A-461E-9F73-E40E04CE97FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F1D7B81-585A-461E-9F73-E40E04CE97FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6757A884-CCCB-43D0-A657-4F2A35896C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6757A884-CCCB-43D0-A657-4F2A35896C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6757A884-CCCB-43D0-A657-4F2A35896C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6757A884-CCCB-43D0-A657-4F2A35896C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

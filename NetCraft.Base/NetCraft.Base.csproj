@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6757A884-CCCB-43D0-A657-4F2A35896C87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NetCraft.Base</RootNamespace>
+    <AssemblyName>NetCraft.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base.cs" />
+    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Handlers\LoginHandler.cs" />
+    <Compile Include="Packets\Packet0KeepAlive.cs" />
+    <Compile Include="Packets\Packet100OpenWindow.cs" />
+    <Compile Include="Packets\Packet101CloseWindow.cs" />
+    <Compile Include="Packets\Packet102WindowClick.cs" />
+    <Compile Include="Packets\Packet103SetSlot.cs" />
+    <Compile Include="Packets\Packet104WindowItems.cs" />
+    <Compile Include="Packets\Packet105UpdateProgressBar.cs" />
+    <Compile Include="Packets\Packet106Transaction.cs" />
+    <Compile Include="Packets\Packet10Flying.cs" />
+    <Compile Include="Packets\Packet11PlayerPosition.cs" />
+    <Compile Include="Packets\Packet12PlayerLook.cs" />
+    <Compile Include="Packets\Packet130UpdateSign.cs" />
+    <Compile Include="Packets\Packet13PlayerLookMove.cs" />
+    <Compile Include="Packets\Packet14BlockDig.cs" />
+    <Compile Include="Packets\Packet15Place.cs" />
+    <Compile Include="Packets\Packet16BlockItemSwitch.cs" />
+    <Compile Include="Packets\Packet17Sleep.cs" />
+    <Compile Include="Packets\Packet18Animation.cs" />
+    <Compile Include="Packets\Packet19EntityAction.cs" />
+    <Compile Include="Packets\Packet1Login.cs" />
+    <Compile Include="Packets\Packet200Statistic.cs" />
+    <Compile Include="Packets\Packet20NamedEntitySpawn.cs" />
+    <Compile Include="Packets\Packet21PickupSpawn.cs" />
+    <Compile Include="Packets\Packet22Collect.cs" />
+    <Compile Include="Packets\Packet23VehicleSpawn.cs" />
+    <Compile Include="Packets\Packet24MobSpawn.cs" />
+    <Compile Include="Packets\Packet255KickDisconnect.cs" />
+    <Compile Include="Packets\Packet25EntityPainting.cs" />
+    <Compile Include="Packets\Packet27Position.cs" />
+    <Compile Include="Packets\Packet28EntityVelocity.cs" />
+    <Compile Include="Packets\Packet29DestroyEntity.cs" />
+    <Compile Include="Packets\Packet2Handshake.cs" />
+    <Compile Include="Packets\Packet30Entity.cs" />
+    <Compile Include="Packets\Packet31RelEntityMove.cs" />
+    <Compile Include="Packets\Packet32EntityLook.cs" />
+    <Compile Include="Packets\Packet33RelEntityMoveLook.cs" />
+    <Compile Include="Packets\Packet34EntityTeleport.cs" />
+    <Compile Include="Packets\Packet38EntityStatus.cs" />
+    <Compile Include="Packets\Packet39AttachEntity.cs" />
+    <Compile Include="Packets\Packet3Chat.cs" />
+    <Compile Include="Packets\Packet40EntityMetadata.cs" />
+    <Compile Include="Packets\Packet4UpdateTime.cs" />
+    <Compile Include="Packets\Packet50PreChunk.cs" />
+    <Compile Include="Packets\Packet51MapChunk.cs" />
+    <Compile Include="Packets\Packet52MultiBlockChange.cs" />
+    <Compile Include="Packets\Packet53BlockChange.cs" />
+    <Compile Include="Packets\Packet54PlayNoteBlock.cs" />
+    <Compile Include="Packets\Packet5PlayerInventory.cs" />
+    <Compile Include="Packets\Packet60Explosion.cs" />
+    <Compile Include="Packets\Packet61DoorChange.cs" />
+    <Compile Include="Packets\Packet6SpawnPosition.cs" />
+    <Compile Include="Packets\Packet70Bed.cs" />
+    <Compile Include="Packets\Packet71Weather.cs" />
+    <Compile Include="Packets\Packet7UseEntity.cs" />
+    <Compile Include="Packets\Packet8UpdateHealth.cs" />
+    <Compile Include="Packets\Packet9Respawn.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Worlds\ChunkPosition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetCraft.Core\NetCraft.Core.csproj">
+      <Project>{5f1d7b81-585a-461e-9f73-e40e04ce97ff}</Project>
+      <Name>NetCraft.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NetCraft\NetCraft.csproj">
+      <Project>{335E9078-445B-410F-BAAE-2348B46E3723}</Project>
+      <Name>NetCraft</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
