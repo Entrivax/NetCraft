@@ -47,7 +47,6 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Events\PlayerLoginEvent.cs" />
     <Compile Include="Handlers\LoginHandler.cs" />
-    <Compile Include="Listeners\IPlayerLoginListener.cs" />
     <Compile Include="Packets\Packet0KeepAlive.cs" />
     <Compile Include="Packets\Packet100OpenWindow.cs" />
     <Compile Include="Packets\Packet101CloseWindow.cs" />
