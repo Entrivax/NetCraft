@@ -1,6 +1,7 @@
 ﻿using NetCraft.Network;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace NetCraft.Plugin
 {
@@ -44,14 +45,14 @@ namespace NetCraft.Plugin
             {
                 foreach (var eventHandlerParams in _handlers[type])
                 {
-                    eventHandlerParams.MethodInfo.Invoke(eventHandlerParams.Instance, new object[] { ev });
+                    eventHandlerParams.Delegate(eventHandlerParams.Instance, ev);
                 }
             }
         }
 
-        public void RegisterEventHandler(object listener)
+        public void RegisterEventHandler<T>(T listener)
         {
-            var type = listener.GetType();
+            var type = typeof(T);
 
             foreach (var method in type.GetMethods())
             {
@@ -61,10 +62,17 @@ namespace NetCraft.Plugin
                 if (attributes.Length < 1)
                     continue;
                 var eventType = ((EventHandler)attributes[0]).EventType;
+
+                var paramType1 = Expression.Parameter(type);
+                var paramType2 = Expression.Parameter(typeof(object));
+                var convert = Expression.Convert(paramType2, eventType);
+                var methodBody = Expression.Call(paramType1, method, convert);
+
+                var del = Expression.Lambda<Action<T, object>>(methodBody, paramType1, paramType2).Compile();
                 var eventHandlerParams = new EventHandlerParams
                 {
-                    MethodInfo = method,
-                    Instance = listener
+                    Instance = listener,
+                    Delegate = (object instance, object ev) => del((T)instance, ev)
                 };
                 if (_handlers.ContainsKey(eventType))
                     _handlers[eventType].Add(eventHandlerParams);

@@ -1,10 +1,10 @@
-﻿using System.Reflection;
+﻿using System;
 
 namespace NetCraft.Plugin
 {
     class EventHandlerParams
     {
-        public MethodInfo MethodInfo { get; set; }
         public object Instance { get; set; }
+        public Action<object, object> Delegate { get; set; }
     }
 }
