@@ -46,8 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Network\DisconnectClientHandler.cs" />
-    <Compile Include="Plugin\EventHandler.cs" />
-    <Compile Include="Plugin\EventHandlerParams.cs" />
+    <Compile Include="Plugin\EventListener.cs" />
+    <Compile Include="Plugin\EventListenerParams.cs" />
     <Compile Include="Plugin\ICancellableEvent.cs" />
     <Compile Include="Plugin\IEvent.cs" />
     <Compile Include="Plugin\IPlugin.cs" />

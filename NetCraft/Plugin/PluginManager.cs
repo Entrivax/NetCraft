@@ -9,12 +9,12 @@ namespace NetCraft.Plugin
     {
         public List<IPlugin> Plugins { get; private set; }
 
-        private Dictionary<Type, List<EventHandlerParams>> _handlers;
+        private Dictionary<Type, List<EventListenerParams>> _handlers;
 
         public PluginManager()
         {
             Plugins = new List<IPlugin>();
-            _handlers = new Dictionary<Type, List<EventHandlerParams>>();
+            _handlers = new Dictionary<Type, List<EventListenerParams>>();
         }
 
         public void LoadPlugin(Server server, IPlugin plugin)
@@ -56,12 +56,12 @@ namespace NetCraft.Plugin
 
             foreach (var method in type.GetMethods())
             {
-                var attributes = method.GetCustomAttributes(typeof(EventHandler), false);
+                var attributes = method.GetCustomAttributes(typeof(EventListener), false);
                 if (attributes.Length > 1)
                     throw new Exception("Cannot use EventHandler attribute more than one time on a method!");
                 if (attributes.Length < 1)
                     continue;
-                var eventType = ((EventHandler)attributes[0]).EventType;
+                var eventType = ((EventListener)attributes[0]).EventType;
 
                 var paramType1 = Expression.Parameter(type);
                 var paramType2 = Expression.Parameter(typeof(object));
@@ -69,7 +69,7 @@ namespace NetCraft.Plugin
                 var methodBody = Expression.Call(paramType1, method, convert);
 
                 var del = Expression.Lambda<Action<T, object>>(methodBody, paramType1, paramType2).Compile();
-                var eventHandlerParams = new EventHandlerParams
+                var eventHandlerParams = new EventListenerParams
                 {
                     Instance = listener,
                     Delegate = (object instance, object ev) => del((T)instance, ev)
@@ -77,7 +77,7 @@ namespace NetCraft.Plugin
                 if (_handlers.ContainsKey(eventType))
                     _handlers[eventType].Add(eventHandlerParams);
                 else
-                    _handlers.Add(eventType, new List<EventHandlerParams> { eventHandlerParams });
+                    _handlers.Add(eventType, new List<EventListenerParams> { eventHandlerParams });
             }
         }
     }

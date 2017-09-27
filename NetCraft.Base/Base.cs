@@ -39,7 +39,7 @@ namespace NetCraft.Base
             }
         }
 
-        [Plugin.EventHandler(typeof(PlayerLoginEvent))]
+        [EventListener(typeof(PlayerLoginEvent))]
         public void OnLogin(PlayerLoginEvent playerLoginEvent)
         {
             Console.WriteLine($"{playerLoginEvent.Player.Username} is trying to connect");

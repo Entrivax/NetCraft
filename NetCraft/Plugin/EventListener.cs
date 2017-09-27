@@ -3,11 +3,11 @@
 namespace NetCraft.Plugin
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class EventHandler : Attribute
+    public class EventListener : Attribute
     {
         public Type EventType { get; private set; }
 
-        public EventHandler(Type eventType)
+        public EventListener(Type eventType)
         {
             EventType = eventType;
         }
