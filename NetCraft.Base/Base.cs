@@ -7,6 +7,7 @@ using NetCraft.Core.Network;
 using NetCraft.Base.Entities;
 using NetCraft.Base.Handlers;
 using NetCraft.Base.Events;
+using NetCraft.Logging;
 
 namespace NetCraft.Base
 {
@@ -14,9 +15,17 @@ namespace NetCraft.Base
     {
         private Dictionary<Client, Player> _players;
 
+        public string Author => "Entrivax";
+        public string Description => "Base implementation of NetCraft";
+        public string Name => "NetCraft Base";
+        public string Version => "0.0.1";
+
+        private Logger _logger;
+
         public void Load(Server server)
         {
-            Console.WriteLine("Loading NetCraft server base");
+            _logger = server.GetLogger(this);
+            _logger.Info("Loading");
 
             _players = new Dictionary<Client, Player>();
 
@@ -34,7 +43,7 @@ namespace NetCraft.Base
         {
             if (_players.ContainsKey(client))
             {
-                Console.WriteLine($"Player {_players[client].Username} disconnected");
+                _logger.Info($"Player {_players[client].Username} disconnected");
                 _players.Remove(client);
             }
         }
@@ -42,13 +51,13 @@ namespace NetCraft.Base
         [EventListener(typeof(PlayerLoginEvent))]
         public void OnLogin(PlayerLoginEvent playerLoginEvent)
         {
-            Console.WriteLine($"{playerLoginEvent.Player.Username} is trying to connect");
+            _logger.Info($"{playerLoginEvent.Player.Username} is trying to connect");
             playerLoginEvent.Cancel("Server not fully implemented");
         }
 
         public void Unload(Server server)
         {
-            Console.WriteLine("Unloading NetCraft server base");
+            _logger.Info("Unloading");
         }
     }
 }

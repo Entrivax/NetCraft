@@ -49,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging\ConsoleLogHandler.cs" />
+    <Compile Include="Logging\ILogHandler.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LoggerManager.cs" />
+    <Compile Include="Logging\Severity.cs" />
     <Compile Include="Network\DisconnectClientHandler.cs" />
     <Compile Include="Plugin\EventListener.cs" />
     <Compile Include="Plugin\EventListenerParams.cs" />

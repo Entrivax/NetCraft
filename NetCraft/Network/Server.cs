@@ -1,5 +1,6 @@
 ﻿using NetCraft.Core.Network;
 using NetCraft.Core.Packets;
+using NetCraft.Logging;
 using NetCraft.Plugin;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace NetCraft.Network
     {
         public PacketManager PacketManager { get; private set; }
         public PluginManager PluginManager { get; private set; }
+        public LoggerManager LoggerManager { get; private set; }
 
         private TcpListener _listener;
         private bool _running;
@@ -27,13 +29,19 @@ namespace NetCraft.Network
         public event EventHandler OnTick;
         public event DisconnectClientHandler OnDisconnect;
 
-        public Server(PacketManager packetManager, PluginManager pluginManager)
+        private Logger _logger;
+
+        public Server(PacketManager packetManager, PluginManager pluginManager, LoggerManager loggerManager)
         {
             PacketManager = packetManager;
             PluginManager = pluginManager;
+            LoggerManager = loggerManager;
+            _logger = new Logger(LoggerManager, "Server");
             _clients = new List<Client>();
             _clientsToRemove = new List<Client>();
         }
+
+        public Logger GetLogger(IPlugin plugin) => LoggerManager.GetLogger(plugin);
 
         public void Stop()
         {
@@ -99,8 +107,8 @@ namespace NetCraft.Network
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine($"Exception of type {exception.GetType()} occurred: {exception.Message}");
-                    Console.WriteLine(exception.StackTrace);
+                    _logger.Error($"Exception of type {exception.GetType()} occurred: {exception.Message}");
+                    _logger.Error(exception.StackTrace);
                     OnDisconnect?.Invoke(this, client);
                     _clientsToRemove.Add(client);
                 }
@@ -141,10 +149,10 @@ namespace NetCraft.Network
             var registeredPacketsCount = PacketManager.GetRegisteredPacketsCount();
             var handledPacketsCount = PacketManager.GetHandledPacketsCount();
             var pluginsCount = PluginManager.Plugins.Count;
-
-            Console.WriteLine($"{registeredPacketsCount} registered packet{(registeredPacketsCount > 0 ? "s" : string.Empty)}");
-            Console.WriteLine($"{handledPacketsCount} handled packet{(handledPacketsCount > 0 ? "s" : string.Empty)}");
-            Console.WriteLine($"{pluginsCount} loaded plugin{(pluginsCount > 0 ? "s" : string.Empty)}");
+            
+            _logger.Info($"{registeredPacketsCount} registered packet{(registeredPacketsCount > 0 ? "s" : string.Empty)}");
+            _logger.Info($"{handledPacketsCount} handled packet{(handledPacketsCount > 0 ? "s" : string.Empty)}");
+            _logger.Info($"{pluginsCount} loaded plugin{(pluginsCount > 0 ? "s" : string.Empty)}");
         }
     }
 }

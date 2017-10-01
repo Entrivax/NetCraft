@@ -3,7 +3,6 @@ using NetCraft.Base.Events;
 using NetCraft.Base.Packets;
 using NetCraft.Core.Network;
 using NetCraft.Plugin;
-using System;
 using System.Collections.Generic;
 
 namespace NetCraft.Base.Handlers
