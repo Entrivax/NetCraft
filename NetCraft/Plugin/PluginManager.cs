@@ -45,7 +45,16 @@ namespace NetCraft.Plugin
             {
                 foreach (var eventHandlerParams in _handlers[type])
                 {
-                    eventHandlerParams.Delegate(eventHandlerParams.Instance, ev);
+                    try
+                    {
+                        eventHandlerParams.Delegate(eventHandlerParams.Instance, ev);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine($"Exception of type {exception.GetType()} occurred:");
+                        Console.WriteLine(exception.Message);
+                        Console.WriteLine(exception.StackTrace);
+                    }
                 }
             }
         }
