@@ -1,4 +1,5 @@
-﻿using NetCraft.Core.Network;
+﻿using NetCraft.Config;
+using NetCraft.Core.Network;
 using NetCraft.Core.Packets;
 using NetCraft.Logging;
 using NetCraft.Plugin;
@@ -19,6 +20,8 @@ namespace NetCraft.Network
         public PluginManager PluginManager { get; private set; }
         public LoggerManager LoggerManager { get; private set; }
 
+        public Configuration Configuration { get; private set; }
+
         private TcpListener _listener;
         private bool _running;
         private Thread _acceptingClientsThread;
@@ -31,6 +34,8 @@ namespace NetCraft.Network
 
         private Logger _logger;
 
+        private const string SERVER_CONFIG_FILE = "server-config.json";
+
         public Server(PacketManager packetManager, PluginManager pluginManager, LoggerManager loggerManager)
         {
             PacketManager = packetManager;
@@ -39,6 +44,40 @@ namespace NetCraft.Network
             _logger = new Logger(LoggerManager, "Server");
             _clients = new List<Client>();
             _clientsToRemove = new List<Client>();
+            Configuration = new Configuration(SERVER_CONFIG_FILE);
+            LoadConfiguration();
+        }
+
+        public void LoadConfiguration()
+        {
+            try
+            {
+                Configuration.Load();
+            }
+            catch (FileNotFoundException)
+            {
+                _logger.Warning($"Server configuration file {SERVER_CONFIG_FILE} not found.");
+            }
+            catch (Exception exception)
+            {
+                _logger.Error($"Unable to read configuration file {SERVER_CONFIG_FILE} :");
+                _logger.Error($"{exception.GetType()} : {exception.Message}");
+                _logger.Error(exception.StackTrace);
+            }
+        }
+
+        public void SaveConfiguration()
+        {
+            try
+            {
+                Configuration.Save();
+            }
+            catch (Exception exception)
+            {
+                _logger.Error($"Unable to write configuration file {SERVER_CONFIG_FILE} :");
+                _logger.Error($"{exception.GetType()} : {exception.Message}");
+                _logger.Error(exception.StackTrace);
+            }
         }
 
         public Logger GetLogger(IPlugin plugin) => LoggerManager.GetLogger(plugin);
@@ -124,7 +163,7 @@ namespace NetCraft.Network
 
         public void LoadPlugins()
         {
-            var pluginPaths = Directory.EnumerateFiles("./Plugins");
+            var pluginPaths = Directory.EnumerateFiles(Configuration.GetValue("pluginDirectory", "./Plugins"));
             foreach (var pluginPath in pluginPaths)
             {
                 if (!pluginPath.ToLower().EndsWith(".dll"))

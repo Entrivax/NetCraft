@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\Configuration.cs" />
     <Compile Include="Logging\ConsoleLogHandler.cs" />
     <Compile Include="Logging\ILogHandler.cs" />
     <Compile Include="Logging\Logger.cs" />

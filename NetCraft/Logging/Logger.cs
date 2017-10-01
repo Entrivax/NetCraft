@@ -18,7 +18,7 @@ namespace NetCraft.Logging
 
         public void Log(Severity severity, string message)
         {
-            _loggerManager.Log(severity, $"{{{DateTime.Now}}} [{_pluginName}] {message}");
+            _loggerManager.Log(severity, $"{{{DateTime.Now}}} [{severity}] [{_pluginName}] {message}");
         }
 
         public void Trace(string message) => Log(Severity.TRACE, message);
