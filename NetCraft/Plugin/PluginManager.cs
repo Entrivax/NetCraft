@@ -67,10 +67,15 @@ namespace NetCraft.Plugin
             {
                 var attributes = method.GetCustomAttributes(typeof(EventListener), false);
                 if (attributes.Length > 1)
-                    throw new Exception("Cannot use EventHandler attribute more than one time on a method!");
+                    throw new Exception("Cannot use EventListener attribute more than one time on a method!");
                 if (attributes.Length < 1)
                     continue;
-                var eventType = ((EventListener)attributes[0]).EventType;
+
+                var parameters = method.GetParameters();
+                if (parameters.Length != 1)
+                    throw new Exception("EventListener must have only one parameter");
+
+                var eventType = parameters[0].ParameterType;
 
                 var paramType1 = Expression.Parameter(type);
                 var paramType2 = Expression.Parameter(typeof(object));

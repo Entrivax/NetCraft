@@ -48,7 +48,7 @@ namespace NetCraft.Base
             }
         }
 
-        [EventListener(typeof(PlayerLoginEvent))]
+        [EventListener]
         public void OnLogin(PlayerLoginEvent playerLoginEvent)
         {
             _logger.Info($"{playerLoginEvent.Player.Username} is trying to connect");
