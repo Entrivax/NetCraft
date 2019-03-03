@@ -47,11 +47,6 @@ namespace NetCraft.Base
             });
 
             server.PacketManager.RegisterPacketHandler<Packet11PlayerPosition>(11, (client, packet) => {
-                UpdateTime(_players[client]);
-                PreChunk(_players[client]);
-                Position(_players[client]);
-                UpdateTime(_players[client]);
-                MapChunk(_players[client]);
             });
 
             server.PacketManager.RegisterPacketHandler<Packet12PlayerLook>(12, (client, packet) => {
@@ -59,6 +54,14 @@ namespace NetCraft.Base
             });
 
             server.PacketManager.RegisterPacketHandler<Packet13PlayerLookMove>(13, (client, packet) => {
+
+            });
+
+            server.PacketManager.RegisterPacketHandler<Packet14BlockDig>(14, (client, packet) => {
+
+            });
+
+            server.PacketManager.RegisterPacketHandler<Packet18Animation>(18, (client, packet) => {
 
             });
 
@@ -97,6 +100,8 @@ namespace NetCraft.Base
             server.PacketManager.RegisterPacketId<Packet10Flying>(10);
             server.PacketManager.RegisterPacketId<Packet12PlayerLook>(12);
             server.PacketManager.RegisterPacketId<Packet13PlayerLookMove>(13);
+            server.PacketManager.RegisterPacketId<Packet14BlockDig>(14);
+            server.PacketManager.RegisterPacketId<Packet18Animation>(18);
             server.PacketManager.RegisterPacketId<Packet50PreChunk>(50);
             server.PacketManager.RegisterPacketId<Packet51MapChunk>(51);
             server.PacketManager.RegisterPacketId<Packet100OpenWindow>(100);
@@ -112,16 +117,6 @@ namespace NetCraft.Base
             server.PluginManager.RegisterEventHandler(this);
         }
 
-        private void UpdateTime(Player player)
-        {
-            player.SendPacket(new Packet4UpdateTime { Time = 0});
-        }
-
-        private void Position(Player player)
-        {
-            player.SendPacket(new Packet13PlayerLookMove {XPosition = 0, YPosition = 0, ZPosition = 0, Stance = 1.6200000047683716D, OnGround = true, Pitch = 0, Yaw = 0});
-        }
-
         private void OnClientDisconnect(object sender, Client client)
         {
             if (_players.ContainsKey(client))
@@ -129,17 +124,6 @@ namespace NetCraft.Base
                 _logger.Info($"Player {_players[client].Username} disconnected");
                 _players.Remove(client);
             }
-        }
-
-        private void PreChunk(Player player)
-        {
-            player.SendPacket(new Packet50PreChunk { XPosition = 0, YPosition = 0, Mode = true });
-        }
-
-        private void MapChunk(Player player)
-        {
-            player.SendPacket(new Packet51MapChunk { XPosition = 0, YPosition = 0, ZPosition = 0,
-                XSize = 0, YSize = 0, ZSize = 0, Chunk = new byte[1] });
         }
 
         [EventListener]

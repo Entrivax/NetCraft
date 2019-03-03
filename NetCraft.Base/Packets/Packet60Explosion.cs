@@ -13,7 +13,7 @@ namespace NetCraft.Base.Packets
         public double ExplosionY { get; set; }
         public double ExplosionZ { get; set; }
         public float ExplosionSize { get; set; }
-        public List<ChunkPosition> DestroyedBlockPositions { get; set; }
+        public List<PositionInChunk> DestroyedBlockPositions { get; set; }
 
         public void ReadPacketData(JavaDataStream stream)
         {
@@ -22,13 +22,13 @@ namespace NetCraft.Base.Packets
             ExplosionZ = stream.ReadDouble();
             ExplosionSize = stream.ReadSingle();
             var blockCount = stream.ReadInt32();
-            DestroyedBlockPositions = new List<ChunkPosition>(blockCount);
+            DestroyedBlockPositions = new List<PositionInChunk>(blockCount);
             var x = (int)ExplosionX;
             var y = (int)ExplosionY;
             var z = (int)ExplosionZ;
             for (int i = 0; i < blockCount; i++)
             {
-                DestroyedBlockPositions.Add(new ChunkPosition
+                DestroyedBlockPositions.Add(new PositionInChunk
                 {
                     X = stream.ReadByte() + x,
                     Y = stream.ReadByte() + y,

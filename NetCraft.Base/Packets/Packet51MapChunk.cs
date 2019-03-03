@@ -40,8 +40,14 @@ namespace NetCraft.Base.Packets
             stream.WriteByte((byte)(XSize - 1));
             stream.WriteByte((byte)(YSize - 1));
             stream.WriteByte((byte)(ZSize - 1));
-            stream.WriteInt32(Chunk.Length);
-            stream.WriteUInt8Array(Chunk, 0, Chunk.Length);
+            var chunk = new byte[(16 * 16 * 128 * 5) / 2];
+            Deflater deflater = new Deflater(-1);
+            deflater.SetInput(Chunk);
+            deflater.Finish();
+            deflater.Deflate(chunk);
+            deflater.Flush();
+            stream.WriteInt32(chunk.Length);
+            stream.WriteUInt8Array(chunk, 0, chunk.Length);
         }
     }
 }
