@@ -3,6 +3,8 @@ using NetCraft.Core.Network;
 using NetCraft.Core.Packets;
 using NetCraft.Logging;
 using NetCraft.Plugin;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +46,7 @@ namespace NetCraft.Network
             _logger = new Logger(LoggerManager, "Server");
             _clients = new List<Client>();
             _clientsToRemove = new List<Client>();
-            Configuration = new Configuration(SERVER_CONFIG_FILE);
+            Configuration = new Configuration();
             LoadConfiguration();
         }
 
@@ -52,7 +54,12 @@ namespace NetCraft.Network
         {
             try
             {
-                Configuration.Load();
+                Configuration = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(SERVER_CONFIG_FILE),
+                    new JsonSerializerSettings
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                        Formatting = Formatting.Indented,
+                    });
             }
             catch (FileNotFoundException)
             {
@@ -70,7 +77,12 @@ namespace NetCraft.Network
         {
             try
             {
-                Configuration.Save();
+                File.WriteAllText(SERVER_CONFIG_FILE, JsonConvert.SerializeObject(Configuration,
+                    new JsonSerializerSettings
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                        Formatting = Formatting.Indented,
+                    }));
             }
             catch (Exception exception)
             {
@@ -163,12 +175,13 @@ namespace NetCraft.Network
 
         public void LoadPlugins()
         {
-            var pluginPaths = Directory.EnumerateFiles(Configuration.GetValue("pluginDirectory", "./Plugins"));
-            foreach (var pluginPath in pluginPaths)
+            var pluginsPath = Configuration.PluginDirectory ?? "./Plugins";
+            var pluginList = Configuration.Plugins ?? new string[] { };
+            foreach (var pluginPath in pluginList)
             {
                 if (!pluginPath.ToLower().EndsWith(".dll"))
                     continue;
-                var assembly = Assembly.LoadFrom(pluginPath);
+                var assembly = Assembly.LoadFrom(Path.Combine(pluginsPath, pluginPath));
                 Type pluginType = null;
                 var types = assembly.GetTypes();
                 foreach (var type in types)
