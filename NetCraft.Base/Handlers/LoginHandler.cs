@@ -30,5 +30,12 @@ namespace NetCraft.Base.Handlers
             if (player != null)
                 players.Add(client, player);
         }
+
+        public static void LoginPlayer(Player player, Client client, Packet1Login packet, PluginManager pluginManager)
+        {
+            //TO-DO Give Right Dimension Later
+            //TO-DO Give Right ProtocolVersion (Player EntityID)
+            player.SendPacket(new Packet1Login { ProtocolVersion = 17, Username = "", MapSeed = 0, Dimension = 0});
+        }
     }
 }

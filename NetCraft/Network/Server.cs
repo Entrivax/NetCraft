@@ -188,10 +188,10 @@ namespace NetCraft.Network
             var registeredPacketsCount = PacketManager.GetRegisteredPacketsCount();
             var handledPacketsCount = PacketManager.GetHandledPacketsCount();
             var pluginsCount = PluginManager.Plugins.Count;
-            
+
             _logger.Info($"{registeredPacketsCount} registered packet{(registeredPacketsCount > 1 ? "s" : string.Empty)}");
             _logger.Info($"{handledPacketsCount} handled packet{(handledPacketsCount > 1 ? "s" : string.Empty)}");
-            _logger.Info($"{pluginsCount} loaded plugin{(pluginsCount > 1 ? "s" : string.Empty)}");
+            _logger.Info($"{pluginsCount} loaded plugin{(pluginsCount > 1 ? "s" : string.Empty)}");  
         }
     }
 }
