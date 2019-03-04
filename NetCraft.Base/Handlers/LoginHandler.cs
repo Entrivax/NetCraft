@@ -41,22 +41,29 @@ namespace NetCraft.Base.Handlers
             ChunkManager chunkManager = new ChunkManager();
             ChunkGeneratorSurface chunkGeneratorSurface = new ChunkGeneratorSurface(chunkManager);
             var world = new World("Bite", new Random().Next());
-            Chunk chunk = new Chunk();
-            chunkGeneratorSurface.PopulateChunk(world, chunk, new ChunkPosition(0, 0), false);
 
             player.SendPacket(new Packet1Login { ProtocolVersion = 17, Username = "", MapSeed = 0, Dimension = 0});
-            player.SendPacket(new Packet13PlayerLookMove { XPosition = 4, YPosition = 135, ZPosition = 3, Stance = 256+1.6200000047683716D, OnGround = true, Pitch = 0, Yaw = 0 });
-            player.SendPacket(new Packet50PreChunk { XPosition = 0, YPosition = 0, Mode = true });
-            player.SendPacket(new Packet51MapChunk
+            player.SendPacket(new Packet13PlayerLookMove { XPosition = 4, YPosition = 135, ZPosition = 3, Stance = 135+1.6200000047683716D, OnGround = true, Pitch = 0, Yaw = 0 });
+
+            for (int x = 0; x < 1; x++)
             {
-                XPosition = 0,
-                YPosition = 0,
-                ZPosition = 0,
-                XSize = 16,
-                YSize = 128,
-                ZSize = 16,
-                Chunk = chunkManager.GetChunkData(chunk)
-            });
+                for (int z = 0; z < 200; z++)
+                {
+                    Chunk chunk = new Chunk();
+                    chunkGeneratorSurface.PopulateChunk(world, chunk, new ChunkPosition(x, z), false);
+                    player.SendPacket(new Packet50PreChunk { XPosition = x, YPosition = z, Mode = true });
+                    player.SendPacket(new Packet51MapChunk
+                    {
+                        XPosition = x*16,
+                        YPosition = 0,
+                        ZPosition = z*16,
+                        XSize = 16,
+                        YSize = 128,
+                        ZSize = 16,
+                        Chunk = chunkManager.GetChunkData(chunk)
+                    });
+                }
+            }
         }
     }
 }

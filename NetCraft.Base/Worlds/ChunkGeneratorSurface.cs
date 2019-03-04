@@ -80,7 +80,7 @@ namespace NetCraft.Base.Worlds
 
             var perlinResult = perlin.Noise(((position.X * 16 + x)) * frequency, 0, ((position.Z * 16 + z)) * frequency);
             var mountainPerlinResult = mountainPerlin.Noise(((position.X * 16 + x)) * moutainFrequency, 0, ((position.Z * 16 + z)) * moutainFrequency);
-            var perlinHeight = MAP((float)perlinResult, -0.5f, 0.5f, 30, 60) * MAP((float)((mountainPerlinResult + 0.5f) * (temperature / 255f)), 0, 1f, 0.5f, 4);
+            var perlinHeight = MAP((float)perlinResult, -0.5f, 0.5f, 20, 30) * MAP((float)((mountainPerlinResult + 0.5f) * (temperature / 255f)), 0, 1f, 0.5f, 4);
             if (perlinHeight < 0)
                 perlinHeight = 0;
             else if (perlinHeight > 127)
@@ -97,7 +97,7 @@ namespace NetCraft.Base.Worlds
                         if (y == height - 1)
                         {
                             if (y > 0 && _chunkManager.GetBlockId(chunk, x, (byte)(y - 1), z) != 0 && rand.Next(10) == 0)
-                                _chunkManager.SetBlockId(chunk, x, y, z, 31);
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 38, 1);
                         }
                         else if (y == height - 2)
                             _chunkManager.SetBlockId(chunk, x, y, z, 2);
@@ -111,7 +111,7 @@ namespace NetCraft.Base.Worlds
                         if (y == height - 1)
                         {
                             if (rand.Next(30) == 0)
-                                _chunkManager.SetBlockId(chunk, x, y, z, 31);
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 38, 1);
                         }
                         else if (y < height - 1 && y >= height - 4)
                             _chunkManager.SetBlockId(chunk, x, y, z, 12);

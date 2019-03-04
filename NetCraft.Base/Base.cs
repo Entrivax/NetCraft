@@ -47,6 +47,7 @@ namespace NetCraft.Base
             });
 
             server.PacketManager.RegisterPacketHandler<Packet11PlayerPosition>(11, (client, packet) => {
+                _players[client].SendPacket(new Packet0KeepAlive());
             });
 
             server.PacketManager.RegisterPacketHandler<Packet12PlayerLook>(12, (client, packet) => {

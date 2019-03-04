@@ -12,8 +12,8 @@ namespace NetCraft.Base.Worlds
         {
             return new Chunk.ChunkBlockInformation
             {
-                Id = chunk.Blocks[(y << 8) + x + (z << 4)],
-                Metadata = chunk.BlockMetadatas[(y << 8) + x + (z << 4)],
+                Id = chunk.Blocks[x << 11 | z << 7 | y],
+                Metadata = chunk.BlockMetadatas[x << 11 | z << 7 | y],
                 Humidity = chunk.Humidity[(z << 4) + x],
                 Temperature = chunk.Temperatures[(z << 4) + x],
             };
@@ -26,11 +26,11 @@ namespace NetCraft.Base.Worlds
 
             Array.Copy(chunk.Blocks, 0, data, offset, chunk.Blocks.Length);
             offset += chunk.Blocks.Length;
-            /*Array.Copy(data.data, 0, abyte0, offset, data.data.length);
-            offset += data.data.length;
-            System.arraycopy(blocklightMap.data, 0, abyte0, offset, blocklightMap.data.length);
-            offset += blocklightMap.data.length;
-            System.arraycopy(skylightMap.data, 0, abyte0, offset, skylightMap.data.length);
+            Array.Copy(chunk.BlockMetadatas, 0, data, offset, chunk.BlockMetadatas.Length);
+            offset += chunk.BlockMetadatas.Length;
+            /*Array.Copy(chunk.LightMap, 0, data, offset, chunk.LightMap.Length);
+            offset += chunk.LightMap.Length;
+            Array.Copy(skylightMap.data, 0, data, offset, skylightMap.data.length);
             offset += skylightMap.data.length;*/
 
             return data;
@@ -38,12 +38,12 @@ namespace NetCraft.Base.Worlds
 
         public byte GetBlockId(Chunk chunk, byte x, byte y, byte z)
         {
-            return chunk.Blocks[(y << 8) + x + (z << 4)];
+            return chunk.Blocks[x << 11 | z << 7 | y];
         }
 
         public byte GetBlockMetadata(Chunk chunk, byte x, byte y, byte z)
         {
-            return chunk.BlockMetadatas[(y << 8) + x + (z << 4)];
+            return chunk.BlockMetadatas[x << 11 | z << 7 | y];
         }
 
         public void SetHumidity(Chunk chunk, byte x, byte z, byte humidity)
@@ -64,7 +64,7 @@ namespace NetCraft.Base.Worlds
         public void SetBlockIdAndMetadata(Chunk chunk, byte x, byte y, byte z, byte id, byte metadata)
         {
             chunk.ChunkParts[y >> 4].Invalidated = true;
-            var index = (y << 8) + x + (z << 4);
+            var index = x << 11 | z << 7 | y;
             chunk.Blocks[index] = id;
             chunk.BlockMetadatas[index] = metadata;
         }
@@ -83,25 +83,25 @@ namespace NetCraft.Base.Worlds
         private void SetSunlight(Chunk chunk, byte x, byte y, byte z, byte value)
         {
             chunk.ChunkParts[y >> 4].Invalidated = true;
-            var loc = (y << 8) + x + (z << 4);
+            var loc = x << 11 | z << 7 | y;
             chunk.LightMap[loc] = (byte)((chunk.LightMap[loc] & 0xf) | (value << 4));
         }
 
         private byte GetSunlight(Chunk chunk, byte x, byte y, byte z)
         {
-            return (byte)((chunk.LightMap[(y << 8) + x + (z << 4)] >> 4) & 0xf);
+            return (byte)((chunk.LightMap[x << 11 | z << 7 | y] >> 4) & 0xf);
         }
 
         private void SetTorchlight(Chunk chunk, byte x, byte y, byte z, byte value)
         {
             chunk.ChunkParts[y >> 4].Invalidated = true;
-            var loc = (y << 8) + x + (z << 4);
+            var loc = x << 11 | z << 7 | y;
             chunk.LightMap[loc] = (byte)((chunk.LightMap[loc] & 0xf0) | value);
         }
 
         private byte GetTorchlight(Chunk chunk, byte x, byte y, byte z)
         {
-            return (byte)(chunk.LightMap[(y << 8) + x + (z << 4)] & 0xf);
+            return (byte)(chunk.LightMap[x << 11 | z << 7 | y] & 0xf);
         }
     }
 }
