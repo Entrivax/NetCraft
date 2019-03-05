@@ -13,7 +13,7 @@ namespace NetCraft.Base.Worlds
             return new Chunk.ChunkBlockInformation
             {
                 Id = chunk.Blocks[x << 11 | z << 7 | y],
-                Metadata = chunk.BlockMetadatas[x << 11 | z << 7 | y],
+                Metadata = (byte)chunk.BlockMetadatas.GetNibble(x, y, z),
                 Humidity = chunk.Humidity[(z << 4) + x],
                 Temperature = chunk.Temperatures[(z << 4) + x],
             };
@@ -26,8 +26,8 @@ namespace NetCraft.Base.Worlds
 
             Array.Copy(chunk.Blocks, 0, data, offset, chunk.Blocks.Length);
             offset += chunk.Blocks.Length;
-            Array.Copy(chunk.BlockMetadatas, 0, data, offset, chunk.BlockMetadatas.Length);
-            offset += chunk.BlockMetadatas.Length;
+            Array.Copy(chunk.BlockMetadatas.Data, 0, data, offset, chunk.BlockMetadatas.Data.Length);
+            offset += chunk.BlockMetadatas.Data.Length;
             /*Array.Copy(chunk.LightMap, 0, data, offset, chunk.LightMap.Length);
             offset += chunk.LightMap.Length;
             Array.Copy(skylightMap.data, 0, data, offset, skylightMap.data.length);
@@ -43,7 +43,7 @@ namespace NetCraft.Base.Worlds
 
         public byte GetBlockMetadata(Chunk chunk, byte x, byte y, byte z)
         {
-            return chunk.BlockMetadatas[x << 11 | z << 7 | y];
+            return (byte)chunk.BlockMetadatas.GetNibble(x, y, z);
         }
 
         public void SetHumidity(Chunk chunk, byte x, byte z, byte humidity)
@@ -66,7 +66,7 @@ namespace NetCraft.Base.Worlds
             chunk.ChunkParts[y >> 4].Invalidated = true;
             var index = x << 11 | z << 7 | y;
             chunk.Blocks[index] = id;
-            chunk.BlockMetadatas[index] = metadata;
+            chunk.BlockMetadatas.SetNibble(x, y, z, metadata);
         }
 
         public void Invalidate(Chunk chunk, byte y)

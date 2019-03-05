@@ -45,9 +45,9 @@ namespace NetCraft.Base.Handlers
             player.SendPacket(new Packet1Login { ProtocolVersion = 17, Username = "", MapSeed = 0, Dimension = 0});
             player.SendPacket(new Packet13PlayerLookMove { XPosition = 4, YPosition = 135, ZPosition = 3, Stance = 135+1.6200000047683716D, OnGround = true, Pitch = 0, Yaw = 0 });
 
-            for (int x = 0; x < 1; x++)
+            for (int x = -5; x < 5; x++)
             {
-                for (int z = 0; z < 200; z++)
+                for (int z = -5; z < 5; z++)
                 {
                     Chunk chunk = new Chunk();
                     chunkGeneratorSurface.PopulateChunk(world, chunk, new ChunkPosition(x, z), false);
