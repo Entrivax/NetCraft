@@ -64,6 +64,15 @@ namespace NetCraft.Base.Handlers
                     });
                 }
             }
+            Chunk c = new Chunk();
+            chunkGeneratorSurface.PopulateChunk(world, c, new ChunkPosition(0, 0), false);
+            Console.WriteLine("[\n");
+            foreach (byte b in c.BlockMetadatas.Data)
+            {
+                Console.Write($"{b}, ");
+            }
+            Console.WriteLine($"]");
+
         }
     }
 }

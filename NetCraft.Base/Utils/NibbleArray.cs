@@ -39,16 +39,16 @@ namespace NetCraft.Base.Utils
         public void SetNibble(int x, int y, int z, int value)
         {
             int x1 = x << 11 | z << 7 | y;
-            int y1 = value >> 1;
-            int z1 = value & 1;
+            int y1 = x1 >> 1;
+            int z1 = x1 & 1;
 
             if (z1 == 0)
             {
-                Data[y1] = (byte)(Data[y1] & 0xf0 | 1 & 0xf);
+                Data[y1] = (byte)(Data[y1] & 0xf0 | value & 0xf);
             }
             else
             {
-                Data[y1] = (byte)(Data[y1] & 0xf0 | (1 & 0xf) << 4);
+                Data[y1] = (byte)(Data[y1] & 0xf0 | (value & 0xf) << 4);
             }
         }
     }

@@ -97,26 +97,40 @@ namespace NetCraft.Base.Worlds
                         if (y == height - 1)
                         {
                             if (y > 0 && _chunkManager.GetBlockId(chunk, x, (byte)(y - 1), z) != 0 && rand.Next(10) == 0)
-                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 31, 1);
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 31, 2);
                         }
                         else if (y == height - 2)
-                            _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 35, 1);
+                            _chunkManager.SetBlockId(chunk, x, y, z, 2);
                         else if (y >= height - 5)
                             _chunkManager.SetBlockId(chunk, x, y, z, 3);
                         else
                             _chunkManager.SetBlockId(chunk, x, y, z, 1);
                     }
-                    else
+                    else if (temperature >= 100 && temperature <= 160)
                     {
                         if (y == height - 1)
                         {
                             if (rand.Next(30) == 0)
-                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 31, 1);
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 31, 0);
                         }
                         else if (y < height - 1 && y >= height - 4)
                             _chunkManager.SetBlockId(chunk, x, y, z, 12);
                         else if (y >= height - 6)
                             _chunkManager.SetBlockId(chunk, x, y, z, 24);
+                        else
+                            _chunkManager.SetBlockId(chunk, x, y, z, 1);
+                    }
+                    else if (temperature < 100)
+                    {
+                        if (y == height - 1)
+                        {
+                            if (rand.Next(30) == 0)
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 78, 0);
+                        }
+                        else if (y < height - 1 && y >= height - 4)
+                            _chunkManager.SetBlockId(chunk, x, y, z, 80);
+                        else if (y >= height - 6)
+                            _chunkManager.SetBlockId(chunk, x, y, z, 79);
                         else
                             _chunkManager.SetBlockId(chunk, x, y, z, 1);
                     }
