@@ -38,41 +38,13 @@ namespace NetCraft.Base.Handlers
             //TO-DO Give Right Dimension Later
             //TO-DO Give Right ProtocolVersion (Player EntityID)
 
-            ChunkManager chunkManager = new ChunkManager();
-            ChunkGeneratorSurface chunkGeneratorSurface = new ChunkGeneratorSurface(chunkManager);
-            var world = new World("Bite", new Random().Next());
+            player.SetPosition(0.0, 350.0, 0.0);
 
             player.SendPacket(new Packet1Login { ProtocolVersion = 17, Username = "", MapSeed = 0, Dimension = 0});
-            player.SendPacket(new Packet13PlayerLookMove { XPosition = 4, YPosition = 135, ZPosition = 3, Stance = 135+1.6200000047683716D, OnGround = true, Pitch = 0, Yaw = 0 });
+            player.SendPacket(new Packet13PlayerLookMove { XPosition = player.PosX, YPosition = player.PosY, ZPosition = player.PosZ, Stance = player.PosY + 1.6200000047683716D, OnGround = true, Pitch = 0, Yaw = 0 });
 
-            for (int x = -5; x < 5; x++)
-            {
-                for (int z = -5; z < 5; z++)
-                {
-                    Chunk chunk = new Chunk();
-                    chunkGeneratorSurface.PopulateChunk(world, chunk, new ChunkPosition(x, z), false);
-                    player.SendPacket(new Packet50PreChunk { XPosition = x, YPosition = z, Mode = true });
-                    player.SendPacket(new Packet51MapChunk
-                    {
-                        XPosition = x*16,
-                        YPosition = 0,
-                        ZPosition = z*16,
-                        XSize = 16,
-                        YSize = 128,
-                        ZSize = 16,
-                        Chunk = chunkManager.GetChunkData(chunk)
-                    });
-                }
-            }
-            Chunk c = new Chunk();
-            chunkGeneratorSurface.PopulateChunk(world, c, new ChunkPosition(0, 0), false);
-            Console.WriteLine("[\n");
-            foreach (byte b in c.BlockMetadatas.Data)
-            {
-                Console.Write($"{b}, ");
-            }
-            Console.WriteLine($"]");
-
+            var playerLoggedEvent = new PlayerLoggedEvent(player);
+            pluginManager.BroadcastEvent(playerLoggedEvent);
         }
     }
 }

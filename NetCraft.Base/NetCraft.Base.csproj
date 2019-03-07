@@ -49,7 +49,10 @@
     <Compile Include="Blocks\BlocksProvider.cs" />
     <Compile Include="Blocks\IBlock.cs" />
     <Compile Include="Blocks\IBlocksProvider.cs" />
-    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\EntityLiving\IEntityLiving.cs" />
+    <Compile Include="Entities\EntityLiving\Player.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Events\PlayerLoggedEvent.cs" />
     <Compile Include="Events\PlayerLoginEvent.cs" />
     <Compile Include="Handlers\LoginHandler.cs" />
     <Compile Include="Helpers\PerlinNoiseHelper.cs" />
@@ -119,9 +122,11 @@
     <Compile Include="Worlds\IChunkGenerator.cs" />
     <Compile Include="Worlds\IChunkManager.cs" />
     <Compile Include="Worlds\IWorldManager.cs" />
+    <Compile Include="Worlds\IWorldsManager.cs" />
     <Compile Include="Worlds\PositionInChunk.cs" />
     <Compile Include="Worlds\World.cs" />
     <Compile Include="Worlds\WorldManager.cs" />
+    <Compile Include="Worlds\WorldsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetCraft.Core\NetCraft.Core.csproj">

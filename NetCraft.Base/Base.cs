@@ -8,17 +8,25 @@ using NetCraft.Base.Entities;
 using NetCraft.Base.Handlers;
 using NetCraft.Base.Events;
 using NetCraft.Logging;
+using NetCraft.Base.Worlds;
+using NetCraft.Base.Blocks;
 
 namespace NetCraft.Base
 {
     public class Base : IPlugin
     {
         private Dictionary<Client, Player> _players;
+        private List<Player> _connectedPlayers;
+        public IWorldsManager WorldsManager { get; private set; }
+        public IWorldManager WorldManager { get; private set; }
+        ChunkManager chunkManager { get; set; }
 
         public string Author => "Entrivax";
         public string Description => "Base implementation of NetCraft";
         public string Name => "NetCraft Base";
         public string Version => "0.0.1";
+
+        private int _ticks = 0;
 
         private Logger _logger;
 
@@ -28,7 +36,16 @@ namespace NetCraft.Base
             _logger.Info("Loading");
 
             _players = new Dictionary<Client, Player>();
+            _connectedPlayers = new List<Player>();
+            WorldsManager = new WorldsManager();
+            WorldsManager.LoadWorld("world");
 
+            IBlocksProvider blocksProvider = new BlocksProvider();
+            chunkManager = new ChunkManager();
+            ChunkGeneratorSurface chunkGeneratorSurface = new ChunkGeneratorSurface(chunkManager);
+            WorldManager = new WorldManager(blocksProvider, chunkManager, chunkGeneratorSurface);
+
+            server.OnTick += Server_OnTick;
 
             server.PacketManager.RegisterPacketHandler<Packet0KeepAlive>(0, (client, packet) => {
                 _players[client].SendPacket(new Packet0KeepAlive());
@@ -47,15 +64,14 @@ namespace NetCraft.Base
             });
 
             server.PacketManager.RegisterPacketHandler<Packet11PlayerPosition>(11, (client, packet) => {
-                _players[client].SendPacket(new Packet0KeepAlive());
+                _players[client].SetPosition(packet.XPosition, packet.YPosition, packet.ZPosition);
+                _players[client].SetChunkPosition((int)Math.Floor(packet.XPosition / 16), (int)Math.Floor(packet.YPosition / 16), (int)Math.Floor(packet.ZPosition / 16));
             });
 
             server.PacketManager.RegisterPacketHandler<Packet12PlayerLook>(12, (client, packet) => {
-
             });
 
             server.PacketManager.RegisterPacketHandler<Packet13PlayerLookMove>(13, (client, packet) => {
-
             });
 
             server.PacketManager.RegisterPacketHandler<Packet14BlockDig>(14, (client, packet) => {
@@ -118,11 +134,50 @@ namespace NetCraft.Base
             server.PluginManager.RegisterEventHandler(this);
         }
 
+        private void Server_OnTick(object sender, EventArgs e)
+        {
+            foreach(Player player in _connectedPlayers)
+            {
+                for(int x = player.ChunkCoordX - 2; x < player.ChunkCoordX + 2; x++)
+                {
+                    for (int z = player.ChunkCoordZ - 2; z < player.ChunkCoordZ + 2; z++)
+                    {
+                        if (!player.LoadedChunk.Contains(new ChunkPosition(x, z)))
+                        {
+                            Chunk c = WorldManager.GetChunkAt(WorldsManager.Worlds[0], x, z);
+                            player.SendPacket(new Packet50PreChunk { XPosition = x, YPosition = z, Mode = true });
+
+                            player.SendPacket(new Packet51MapChunk
+                            {
+                                XPosition = x*16,
+                                YPosition = 0,
+                                ZPosition = z*16,
+                                XSize = 16,
+                                YSize = 128,
+                                ZSize = 16,
+                                Chunk = chunkManager.GetChunkData(c)
+                            });
+                            player.LoadedChunk.Add(new ChunkPosition(x, z));
+                        }
+                    }
+                }
+
+                if (_ticks >= 20)
+                {
+                    player.SendPacket(new Packet0KeepAlive());
+                    _ticks = 0;
+                }
+            }
+            Console.WriteLine($"Ticks: {_ticks}");
+            _ticks++;
+        }
+
         private void OnClientDisconnect(object sender, Client client)
         {
             if (_players.ContainsKey(client))
             {
                 _logger.Info($"Player {_players[client].Username} disconnected");
+                _connectedPlayers.Remove(_players[client]);
                 _players.Remove(client);
             }
         }
@@ -131,6 +186,15 @@ namespace NetCraft.Base
         public void OnLogin(PlayerLoginEvent playerLoginEvent)
         {
             _logger.Info($"{playerLoginEvent.Player.Username} is trying to connect");
+
+            //playerLoginEvent.Cancel("Server not fully implemented");
+        }
+
+        [EventListener]
+        public void OnLogged(PlayerLoggedEvent playerLoggedEvent)
+        {
+            _logger.Info($"{playerLoggedEvent.Player.Username} is now connected");
+            _connectedPlayers.Add(playerLoggedEvent.Player);
             //playerLoginEvent.Cancel("Server not fully implemented");
         }
 

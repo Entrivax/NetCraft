@@ -111,7 +111,7 @@ namespace NetCraft.Base.Worlds
                         if (y == height - 1)
                         {
                             if (rand.Next(30) == 0)
-                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 31, 0);
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 90, 0);
                         }
                         else if (y < height - 1 && y >= height - 4)
                             _chunkManager.SetBlockId(chunk, x, y, z, 12);
