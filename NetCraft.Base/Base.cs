@@ -42,7 +42,7 @@ namespace NetCraft.Base
 
             IBlocksProvider blocksProvider = new BlocksProvider();
             chunkManager = new ChunkManager();
-            ChunkGeneratorSurface chunkGeneratorSurface = new ChunkGeneratorSurface(chunkManager);
+            ChunkGeneratorSurface chunkGeneratorSurface = new ChunkGeneratorSurface(chunkManager, blocksProvider);
             WorldManager = new WorldManager(blocksProvider, chunkManager, chunkGeneratorSurface);
 
             server.OnTick += Server_OnTick;
@@ -138,9 +138,9 @@ namespace NetCraft.Base
         {
             foreach(Player player in _connectedPlayers)
             {
-                for(int x = player.ChunkCoordX - 2; x < player.ChunkCoordX + 2; x++)
+                for(int x = player.ChunkCoordX - 4; x < player.ChunkCoordX + 4; x++)
                 {
-                    for (int z = player.ChunkCoordZ - 2; z < player.ChunkCoordZ + 2; z++)
+                    for (int z = player.ChunkCoordZ - 4; z < player.ChunkCoordZ + 4; z++)
                     {
                         if (!player.LoadedChunk.Contains(new ChunkPosition(x, z)))
                         {
@@ -168,7 +168,6 @@ namespace NetCraft.Base
                     _ticks = 0;
                 }
             }
-            Console.WriteLine($"Ticks: {_ticks}");
             _ticks++;
         }
 

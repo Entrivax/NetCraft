@@ -28,10 +28,10 @@ namespace NetCraft.Base.Worlds
             offset += chunk.Blocks.Length;
             Array.Copy(chunk.BlockMetadatas.Data, 0, data, offset, chunk.BlockMetadatas.Data.Length);
             offset += chunk.BlockMetadatas.Data.Length;
-            /*Array.Copy(chunk.LightMap, 0, data, offset, chunk.LightMap.Length);
-            offset += chunk.LightMap.Length;
-            Array.Copy(skylightMap.data, 0, data, offset, skylightMap.data.length);
-            offset += skylightMap.data.length;*/
+            Array.Copy(chunk.LightMap.Data, 0, data, offset, chunk.LightMap.Data.Length);
+            offset += chunk.LightMap.Data.Length;
+            Array.Copy(chunk.SunLightMap.Data, 0, data, offset, chunk.SunLightMap.Data.Length);
+            offset += chunk.SunLightMap.Data.Length;
 
             return data;
         }
@@ -80,28 +80,26 @@ namespace NetCraft.Base.Worlds
                 chunk.ChunkParts[i].Invalidated = true;
         }
 
-        private void SetSunlight(Chunk chunk, byte x, byte y, byte z, byte value)
+        public void SetSunlight(Chunk chunk, byte x, byte y, byte z, byte value)
         {
             chunk.ChunkParts[y >> 4].Invalidated = true;
-            var loc = x << 11 | z << 7 | y;
-            chunk.LightMap[loc] = (byte)((chunk.LightMap[loc] & 0xf) | (value << 4));
+            chunk.SunLightMap.SetNibble(x, y, z, (byte)(value & 0xf));
         }
 
         private byte GetSunlight(Chunk chunk, byte x, byte y, byte z)
         {
-            return (byte)((chunk.LightMap[x << 11 | z << 7 | y] >> 4) & 0xf);
+            return chunk.SunLightMap.GetNibble(x, y, z);
         }
 
         private void SetTorchlight(Chunk chunk, byte x, byte y, byte z, byte value)
         {
             chunk.ChunkParts[y >> 4].Invalidated = true;
-            var loc = x << 11 | z << 7 | y;
-            chunk.LightMap[loc] = (byte)((chunk.LightMap[loc] & 0xf0) | value);
+            chunk.LightMap.SetNibble(x, y, z, (byte)(value & 0xf));
         }
 
         private byte GetTorchlight(Chunk chunk, byte x, byte y, byte z)
         {
-            return (byte)(chunk.LightMap[x << 11 | z << 7 | y] & 0xf);
+            return chunk.LightMap.GetNibble(x, y, z);
         }
     }
 }

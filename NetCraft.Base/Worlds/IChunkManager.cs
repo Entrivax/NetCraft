@@ -11,5 +11,6 @@
         void SetBlockIdAndMetadata(Chunk chunk, byte x, byte y, byte z, byte id, byte metadata);
         void Invalidate(Chunk chunk, byte y);
         void Invalidate(Chunk chunk);
+        void SetSunlight(Chunk chunk, byte x, byte y, byte z, byte value);
     }
 }

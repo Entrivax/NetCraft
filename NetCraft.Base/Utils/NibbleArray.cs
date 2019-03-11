@@ -20,23 +20,23 @@ namespace NetCraft.Base.Utils
             Data = data;
         }
 
-        public int GetNibble(int x, int y, int z)
+        public byte GetNibble(int x, int y, int z)
         {
             int value = x << 11 | z << 7 | y;
-            int x1 = value >> 1;
-            int y1 = value & 1;
+            byte x1 = (byte)(value >> 1);
+            byte y1 = (byte)(value & 1);
 
             if (y == 0)
             {
-                return Data[x1] & 0xf;
+                return (byte)(Data[x1] & 0xf);
             }
             else
             {
-                return Data[x1] >> 4 & 0xf;
+                return (byte)(Data[x1] >> 4 & 0xf);
             }
         }
 
-        public void SetNibble(int x, int y, int z, int value)
+        public void SetNibble(int x, int y, int z, byte value)
         {
             int x1 = x << 11 | z << 7 | y;
             int y1 = x1 >> 1;

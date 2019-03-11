@@ -13,13 +13,16 @@ namespace NetCraft.Base.Worlds
         public NibbleArray BlockMetadatas { get; }
         public byte[] Temperatures { get; }
         public byte[] Humidity { get; }
-        public byte[] LightMap { get; }
+        public NibbleArray LightMap { get; }
+        public NibbleArray SunLightMap { get; }
         public ChunkPart[] ChunkParts { get; }
 
         public Chunk()
         {
             Blocks = new byte[16 * 16 * 128];
             BlockMetadatas = new NibbleArray(16 * 16 * 128);
+            LightMap = new NibbleArray(16 * 16 * 128);
+            SunLightMap = new NibbleArray(16 * 16 * 128);
             Temperatures = new byte[16 * 16];
             Humidity = new byte[16 * 16];
             var chunkPartsNumber = 128 / 16;

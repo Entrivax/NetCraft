@@ -1,4 +1,5 @@
-﻿using NetCraft.Base.Helpers;
+﻿using NetCraft.Base.Blocks;
+using NetCraft.Base.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace NetCraft.Base.Worlds
     class ChunkGeneratorSurface : IChunkGenerator
     {
         private readonly IChunkManager _chunkManager;
+        private readonly IBlocksProvider _blockProvider;
 
-        public ChunkGeneratorSurface(IChunkManager chunkManager)
+        public ChunkGeneratorSurface(IChunkManager chunkManager, IBlocksProvider blockProvider)
         {
             _chunkManager = chunkManager;
+            _blockProvider = blockProvider;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,6 +62,18 @@ namespace NetCraft.Base.Worlds
                     PerlinGeneration(world.Seed, chunk, position, perlin, mountainPerlin, cavePerlin, temperaturePerlin, humidityPerlin, (byte)(i % 16), (byte)(i / 16));
                 });
             }
+
+            for (byte x = 0; x < 16; x++)
+            {
+                for (byte z = 0; z < 16; z++)
+                {
+                    for (short y = 127 ; y >= 0; y--)
+                    {
+                        _chunkManager.SetSunlight(chunk, x, (byte)(y), z, 15);            
+                    }
+                }
+            }
+            
         }
 
         private void PerlinGeneration(long seed, Chunk chunk, ChunkPosition position,
@@ -111,7 +126,7 @@ namespace NetCraft.Base.Worlds
                         if (y == height - 1)
                         {
                             if (rand.Next(30) == 0)
-                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 90, 0);
+                                _chunkManager.SetBlockIdAndMetadata(chunk, x, y, z, 31, 0);
                         }
                         else if (y < height - 1 && y >= height - 4)
                             _chunkManager.SetBlockId(chunk, x, y, z, 12);
